@@ -1,7 +1,11 @@
+import { SocketProvider } from '@/components/providers/SocketProvider';
+
 export default function GamePage() {
   return (
     <main>
-      hi
+      <SocketProvider>
+        <div>game</div>
+      </SocketProvider>
     </main>
   )
 }
