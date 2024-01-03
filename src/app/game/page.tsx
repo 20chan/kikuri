@@ -1,11 +1,11 @@
 import { SocketProvider } from '@/components/providers/SocketProvider';
+import Link from 'next/link';
 
 export default function GamePage() {
   return (
     <main>
-      <SocketProvider>
-        <div>game</div>
-      </SocketProvider>
+      <h1>available games:</h1>
+      <Link href='/game/rps'>rps</Link>
     </main>
   )
 }

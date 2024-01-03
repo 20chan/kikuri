@@ -14,6 +14,16 @@ const nextConfig = (phase) => {
 
   return {
     distDir: isProd ? '.next.prod' : '.next.dev',
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'cdn.discordapp.com',
+          port: '',
+          pathname: '**',
+        }
+      ]
+    }
   }
 }
 

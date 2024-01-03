@@ -1,5 +1,5 @@
 import { SignIn } from '@/components/SignIn'
-import { authOptions } from '@/lib/auth/authOptions'
+import { authOptions } from '@/lib/auth'
 import { kaiji } from '@/lib/images'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image'

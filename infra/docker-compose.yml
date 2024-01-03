@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  redis:
+    image: redis
+    container_name: redis_kikuri
+    hostname: redis_kikuri
+    labels:
+      - name=redis
+      - mode=standalone
+    ports:
+      - 6381:6379
+    restart: always
+    command: redis-server --requirepass "aCenzEoxfHdhP"

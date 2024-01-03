@@ -1,4 +1,4 @@
-import { NextAuthOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET ?? '';
@@ -13,4 +13,22 @@ export const authOptions: NextAuthOptions = {
       clientSecret: DISCORD_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session.user) {
+        (session.user as any).id = token.sub
+      }
+      return session;
+    },
+  },
+  session: {
+    strategy: 'jwt',
+  },
 };
+
+export const nextAuth = NextAuth(authOptions);
+
+export const {
+  auth,
+  handlers,
+} = nextAuth;
