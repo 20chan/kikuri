@@ -1,8 +1,11 @@
 import { createGame, findGame } from '@/lib/room/createRoom';
 import { redirect } from 'next/navigation';
-import { NextFormData } from 'nextjs-parser';
+import { NextFormData, NextProps } from 'nextjs-parser';
 
-export default function RPSPage() {
+export default function RPSPage(props: NextProps) {
+  const { searchParams } = props;
+  const notFound = searchParams['notfound'] !== undefined;
+
   async function create() {
     'use server';
 
@@ -19,6 +22,8 @@ export default function RPSPage() {
     const game = await findGame({ roomCode });
     if (game) {
       redirect(`/game/rps/${roomCode}`);
+    } else {
+      redirect(`/game/rps?notfound`)
     }
   }
 
@@ -31,7 +36,7 @@ export default function RPSPage() {
 
           <input
             type='submit'
-            className='mt-20 p-6 w-96 text-xl bg-half-green text-half-black'
+            className='mt-20 p-6 w-96 text-xl bg-half-green hover:bg-half-green/70 text-half-black cursor-pointer'
             value='새로운 방 생성'
           />
         </form>
@@ -48,10 +53,16 @@ export default function RPSPage() {
 
           <input
             type='submit'
-            className='block p-6 w-96 text-xl bg-half-green text-half-black'
+            className='block p-6 w-96 text-xl bg-half-green hover:bg-half-green/70 text-half-black cursor-pointer'
             value='기존 방 참가'
           />
         </form>
+
+        {
+          notFound && (
+            <p className='mt-8 text-2xl'>방을 찾을 수 없습니다.</p>
+          )
+        }
       </main>
     </>
   )
