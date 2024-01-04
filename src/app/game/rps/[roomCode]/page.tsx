@@ -17,13 +17,15 @@ export default function RPSGamePage(props: NextProps) {
   const [members, setMembers] = useState<User[]>([]);
   const [game, setGame] = useState(RPSState.create());
 
-  const addMember = (user: User) => {
-    // TODO: 지금은 디버깅..
-    if (members.find(x => x.id === user.id) === undefined) {
-    }
+  const isHost = useMemo(() => {
+    return members[0]?.id === socket?.id;
+  }, [members, socket]);
 
-    setMembers(members => [...members, user]);
-  }
+  const addMember = (user: User) => {
+    if (members.find(x => x.id === user.id) === undefined) {
+      setMembers(members => [...members, user]);
+    }
+  };
 
   useEffect(() => {
     if (!socket) return;
@@ -66,6 +68,15 @@ export default function RPSGamePage(props: NextProps) {
           <Image src={member.image} alt='user image' width={24} height={24} />
         </div>
       ))}
+
+      {
+        isHost && (
+          <button
+          >
+            START
+          </button>
+        )
+      }
     </div>
   );
 }

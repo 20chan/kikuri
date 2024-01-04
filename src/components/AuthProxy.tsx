@@ -5,8 +5,7 @@ import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 
 function AuthProxy({ children, fallback }: { children: React.ReactNode, fallback?: React.ReactNode }) {
-  const { data: session } = useSession();
-  console.log(session);
+  const { data: session, } = useSession();
 
   if (!session) {
     redirect('/');

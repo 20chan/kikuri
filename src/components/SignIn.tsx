@@ -11,7 +11,6 @@ export function SignIn({
   className?: string;
 }) {
   const { data: session } = useSession();
-  console.log(session);
 
   if (session) {
     redirect('/game');
