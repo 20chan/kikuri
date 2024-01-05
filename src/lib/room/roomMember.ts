@@ -21,8 +21,8 @@ export async function joinRoom(options: {
     throw new Error(`Game not found for room code ${roomCode}`);
   }
 
-  redis.sadd(`game:${game.gameKind}:${roomCode}:members`, user.id);
-  redis.hset(`game:${game.gameKind}:${roomCode}:members:info`, user.id, JSON.stringify(user));
+  await redis.sadd(`game:${game.gameKind}:${roomCode}:members`, user.id);
+  await redis.hset(`game:${game.gameKind}:${roomCode}:members:info`, user.id, JSON.stringify(user));
 }
 
 export async function leaveRoom(options: {
@@ -39,8 +39,8 @@ export async function leaveRoom(options: {
     throw new Error(`Game not found for room code ${roomCode}`);
   }
 
-  redis.srem(`game:${game.gameKind}:${roomCode}:members`, userId);
-  redis.srem(`game:${game.gameKind}:${roomCode}:members:${userId}`, userId);
+  await redis.srem(`game:${game.gameKind}:${roomCode}:members`, userId);
+  await redis.srem(`game:${game.gameKind}:${roomCode}:members:${userId}`, userId);
 }
 
 export async function getRoomMembers(options: {

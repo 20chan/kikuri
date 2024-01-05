@@ -32,54 +32,53 @@ export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
         }
       }
     } else if (phase === 'pick') {
-      if (action.type === 'pick') {
-        const { hand } = action.payload;
-
-        if (curr.hands[pid] === null) {
-          const hands: typeof curr.hands = [...curr.hands];
-          hands[pid] = hand;
-
-          if (hands[0] !== null && hands[1] !== null) {
-            const winner = RPSHand.compare(hands[0], hands[1]);
-            const score: typeof curr.score = [...curr.score];
-            if (winner !== -1) {
-              score[winner] += 1;
-            }
-            const winners = [...curr.winners, winner];
-
-            return {
-              ok: true,
-              next: {
-                ...curr,
-                phase: 'result',
-                score,
-                winners,
-                hands,
-              },
-              events: [],
-            }
-          }
-
-          return {
-            ok: true,
-            next: {
-              ...curr,
-              hands,
-            },
-            events: [],
-          };
-        } else {
-          return {
-            ok: false,
-            error: 'You have already picked',
-          }
-        }
-      } else {
+      if (action.type !== 'pick') {
         return {
           ok: false,
           error: 'only pick allowed',
         }
       }
+      const { hand } = action.payload;
+
+      if (curr.hands[pid] !== null) {
+        return {
+          ok: false,
+          error: 'You have already picked',
+        }
+      }
+
+      const hands: typeof curr.hands = [...curr.hands];
+      hands[pid] = hand;
+
+      if (hands[0] !== null && hands[1] !== null) {
+        const winner = RPSHand.compare(hands[0], hands[1]);
+        const score: typeof curr.score = [...curr.score];
+        if (winner !== -1) {
+          score[winner] += 1;
+        }
+        const winners = [...curr.winners, winner];
+
+        return {
+          ok: true,
+          next: {
+            ...curr,
+            phase: 'result',
+            score,
+            winners,
+            hands,
+          },
+          events: [],
+        }
+      }
+
+      return {
+        ok: true,
+        next: {
+          ...curr,
+          hands,
+        },
+        events: [],
+      };
     } else if (phase === 'result') {
       if (action.type === 'next') {
         if (curr.score[0] >= 3 || curr.score[1] >= 3) {
