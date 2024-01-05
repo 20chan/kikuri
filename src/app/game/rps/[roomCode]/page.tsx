@@ -66,7 +66,6 @@ export default function RPSGamePage(props: NextProps) {
         setMembers(members);
       } else if (data.type === 'action') {
         const newState = data.state as RPSState;
-        console.log(newState);
         setGame({ state: newState });
       }
     });
@@ -104,7 +103,7 @@ export default function RPSGamePage(props: NextProps) {
   const doAction = useCallback((action: RPSAction) => {
     const res = new RPSMachine().transit(game.state, myPid, action);
     if (!res.ok) {
-      console.log(game.state);
+      console.error(game.state);
       console.error(res.error);
       return;
     }
