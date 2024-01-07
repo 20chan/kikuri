@@ -3,8 +3,8 @@ const {
   PHASE_PRODUCTION_SERVER,
 } = require('next/dist/shared/lib/constants')
 
+/** @type {import('next').NextConfig} */
 const nextConfig = (phase) => {
-  /** @type {import('next').NextConfig} */
 
   const isProd = (
     process.env.NODE_ENV === 'production'
