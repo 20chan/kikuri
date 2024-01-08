@@ -12,6 +12,7 @@ export type CellType = (
 type CityCell = {
   name: string;
   type: 'city';
+  color: string;
   prices: number[];
   fees: number[];
 }
@@ -19,6 +20,7 @@ type CityCell = {
 type AirportCell = {
   name: string;
   type: 'airport';
+  color: string;
   prices: number[];
   fees: number[];
 }
@@ -26,11 +28,13 @@ type AirportCell = {
 type TaxCell = {
   name: string;
   type: 'tax';
+  color: string;
   fee: number;
 }
 
 type GeneralCell = {
   name: string;
+  color: string;
   type: (
     | 'start'
     | 'island'
@@ -52,54 +56,64 @@ export const board: MarbleCell[][] = [
     {
       name: '출발',
       type: 'start',
+      color: 'white',
     },
     {
       name: '타이베이',
       type: 'city',
+      color: '#90EE90',
       prices: [5, 25, 15, 5],
       fees: [2, 25, 9, 1, 3]
     },
     {
       name: '황금열쇠',
       type: 'card',
+      color: 'white',
     },
     {
       name: '베이징',
       type: 'city',
+      color: '#90EE90',
       prices: [8, 25, 15, 5],
       fees: [4, 45, 18, 2, 6],
     },
     {
       name: '마닐라',
       type: 'city',
+      color: 'green',
       prices: [8, 25, 15, 5],
       fees: [4, 45, 18, 2, 6],
     },
     {
       name: '제주도',
       type: 'city',
+      color: 'green',
       prices: [20],
       fees: [30],
     },
     {
       name: '싱가포르',
       type: 'city',
+      color: 'green',
       prices: [10, 25, 15, 5],
       fees: [6, 55, 27, 3, 9],
     },
     {
       name: '황금열쇠',
       type: 'card',
+      color: 'white',
     },
     {
       name: '카이로',
       type: 'city',
+      color: 'green',
       prices: [10, 25, 15, 5],
       fees: [6, 44, 27, 3, 9],
     },
     {
       name: '이스탄불',
       type: 'city',
+      color: 'green',
       prices: [12, 25, 15, 5],
       fees: [8, 60, 30, 4, 10],
     },
@@ -108,54 +122,64 @@ export const board: MarbleCell[][] = [
     {
       name: '무인도',
       type: 'island',
+      color: 'white',
     },
     {
       name: '아테네',
       type: 'city',
+      color: '#ADD8E6',
       prices: [14, 50, 30, 10],
       fees: [1, 75, 45, 5, 15],
     },
     {
       name: '황금열쇠',
       type: 'card',
+      color: 'white',
     },
     {
       name: '코펜하겐',
       type: 'city',
+      color: '#ADD8E6',
       prices: [16, 50, 30, 10],
       fees: [1, 90, 50, 6, 18],
     },
     {
       name: '스톡홀름',
       type: 'city',
+      color: '#ADD8E6',
       prices: [16, 50, 30, 10],
       fees: [1, 90, 50, 6, 18],
     },
     {
       name: '콩코드 여객기',
       type: 'airport',
+      color: '#ADD8E6',
       prices: [20],
       fees: [30],
     },
     {
       name: '베른',
       type: 'city',
+      color: '#ADD8E6',
       prices: [18, 50, 30, 10],
       fees: [1, 95, 55, 7, 20],
     },
     {
       name: '황금열쇠',
       type: 'card',
+      color: 'white',
     },
     {
       name: '베를린',
       type: 'city',
+      color: 'blue',
       prices: [18, 50, 30, 10],
       fees: [1, 95, 55, 7, 20],
     },
     {
       name: '오타와',
       type: 'city',
+      color: 'blue',
       prices: [20, 50, 30, 10],
       fees: [1, 100, 60, 8, 22],
     },
@@ -164,54 +188,64 @@ export const board: MarbleCell[][] = [
     {
       name: '사회복지기금 접수',
       type: 'fund',
+      color: 'white',
     },
     {
       name: '부에노스 아이레스',
       type: 'city',
+      color: 'pink',
       prices: [22, 75, 40, 15],
       fees: [2, 105, 70, 9, 25],
     },
     {
       name: '황금열쇠',
       type: 'card',
+      color: 'white',
     },
     {
       name: '상파울루',
       type: 'city',
+      color: 'pink',
       prices: [24, 75, 45, 15],
       fees: [2, 110, 75, 10, 30],
     },
     {
       name: '시드니',
       type: 'city',
+      color: 'pink',
       prices: [24, 75, 45, 15],
       fees: [2, 110, 75, 10, 30],
     },
     {
       name: '부산',
       type: 'city',
+      color: 'pink',
       prices: [50],
       fees: [60],
     },
     {
       name: '하와이',
       type: 'city',
+      color: 'purple',
       prices: [26, 75, 45, 15],
       fees: [2, 115, 80, 11, 33],
     },
     {
       name: '리스본',
       type: 'city',
+      color: 'purple',
       prices: [26, 75, 45, 15],
       fees: [2, 115, 80, 11, 33],
     },
     {
       name: '황금열쇠',
       type: 'card',
+      color: 'white',
     },
     {
       name: '마드리드',
       type: 'city',
+      color: 'purple',
       prices: [28, 75, 45, 15],
       fees: [2, 120, 85, 12, 36],
     },
@@ -220,55 +254,65 @@ export const board: MarbleCell[][] = [
     {
       name: '우주여행',
       type: 'space',
+      color: 'white',
     },
     {
       name: '도쿄',
       type: 'city',
+      color: 'orange',
       prices: [30, 100, 60, 20],
       fees: [3, 127, 90, 13, 39],
     },
     {
       name: '컬럼비아호',
       type: 'city',
+      color: 'orange',
       prices: [45],
       fees: [30],
     },
     {
       name: '파리',
       type: 'city',
+      color: 'orange',
       prices: [32, 100, 60, 20],
       fees: [3, 140, 100, 15, 45],
     },
     {
       name: '로마',
       type: 'city',
+      color: 'orange',
       prices: [32, 100, 60, 20],
       fees: [3, 140, 100, 15, 45],
     },
     {
       name: '황금열쇠',
       type: 'card',
+      color: 'white',
     },
     {
       name: '런던',
       type: 'city',
+      color: 'red',
       prices: [35, 100, 60, 20],
       fees: [4, 150, 110, 17, 50],
     },
     {
       name: '뉴욕',
       type: 'city',
+      color: 'red',
       prices: [35, 100, 60, 20],
       fees: [4, 150, 110, 17, 50],
     },
     {
       name: '사회복지기금 접수',
       type: 'tax',
+      color: 'white',
       fee: 15,
     },
     {
       name: '서울',
       type: 'city',
+      color: 'red',
       prices: [100],
       fees: [200],
     },
@@ -278,7 +322,7 @@ export const board: MarbleCell[][] = [
 export const cards = [
   {
     name: '반액대매출',
-    type: 'sell_half'
+    type: 'sell_half',
   },
   {
     name: '정기종합소득세',

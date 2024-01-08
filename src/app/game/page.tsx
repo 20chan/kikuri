@@ -6,9 +6,12 @@ export default function GamePage() {
     <main className='p-24 flex flex-col items-center'>
       <p className='text-5xl'>Games</p>
 
-      <div className='mt-20'>
+      <div className='mt-20 flex flex-col gap-2'>
         <Link href='/game/rps' className='block w-96 p-6 text-xl text-center bg-half-green hover:bg-half-green/70 text-half-black cursor-pointer'>
           Rock Paper Scissors
+        </Link>
+        <Link href='/game/marble' className='block w-96 p-6 text-xl text-center bg-half-green hover:bg-half-green/70 text-half-black cursor-pointer'>
+          Rainbow Marble
         </Link>
       </div>
     </main>

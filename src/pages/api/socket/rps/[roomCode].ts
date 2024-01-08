@@ -64,7 +64,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseI
           });
         }
 
-        console.log({ members, user })
         if (members[0].id !== user.id) {
           return res.status(400).json({
             error: 'Not the host',
