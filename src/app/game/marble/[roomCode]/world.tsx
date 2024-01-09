@@ -1,6 +1,6 @@
 import { Text } from '@react-three/drei';
 import { MarbleCell, board, playerColors } from '@/lib/games/marble/marbleRule';
-import { useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { MarbleCellState, MarblePlayerState, MarbleState } from '@/lib/games/marble/marbleState';
 import { Vector3 } from '@react-three/fiber';
 
@@ -39,7 +39,7 @@ function getCoord(axis: number, index: number): [number, number, number] {
 }
 
 export function World({ state }: { state: MarbleState }) {
-  const [hoverCells, setHoverCells] = useState<number[]>([]);
+  const [hoverCell, setHoverCell] = useState<number | null>(null);
 
   return (
     <>
@@ -50,7 +50,7 @@ export function World({ state }: { state: MarbleState }) {
       {
         state.players.map((player, i) => {
           return (
-            <Player key={i} pid={i} state={player} />
+            <Player key={i} pid={i} state={player} hoverCell={hoverCell} />
           )
         })
       }
@@ -59,7 +59,7 @@ export function World({ state }: { state: MarbleState }) {
           const indices = getBoardIndex(i);
           const cellInfo = board[indices[0]][indices[1]];
           return (
-            <Cell key={i} position={i} cell={cell} cellInfo={cellInfo} hoverCells={hoverCells} setHoverCells={setHoverCells} />
+            <Cell key={i} position={i} cell={cell} cellInfo={cellInfo} hoverCell={hoverCell} setHoverCell={setHoverCell} />
           )
         })
       }
@@ -72,8 +72,8 @@ interface CellProps {
   cell: MarbleCellState;
   cellInfo: MarbleCell;
 
-  hoverCells: number[];
-  setHoverCells: (value: number[]) => void;
+  hoverCell: number | null;
+  setHoverCell: Dispatch<SetStateAction<number | null>>;
 }
 
 export function Cell(props: CellProps) {
@@ -81,12 +81,12 @@ export function Cell(props: CellProps) {
     position,
     cell,
     cellInfo,
-    hoverCells,
-    setHoverCells,
+    hoverCell,
+    setHoverCell,
   } = props;
 
   const coord = getCoord(...getBoardIndex(position));
-  if (hoverCells[0] === position) {
+  if (hoverCell === position) {
     coord[1] = 0.1;
   }
 
@@ -108,17 +108,64 @@ export function Cell(props: CellProps) {
     }
   }, [position]);
 
+  const buildings = useMemo(() => {
+    if (cell.owner === null) {
+      return null;
+    }
+
+    const color = playerColors[cell.owner];
+
+    if (cell.buildings.length === 1) {
+      return (
+        <mesh position={[0, 0.4, 0.4]} castShadow>
+          <boxGeometry args={[0.7, 0.5, 0.2]} />
+          <meshStandardMaterial color={color} />
+        </mesh>
+      );
+    }
+
+    return (
+      <>
+        {
+          cell.buildings[0] && (
+            <mesh position={[0.3, 0.4, 0.4]} castShadow>
+              <boxGeometry args={[0.2, 0.2, 0.2]} />
+              <meshStandardMaterial color={color} />
+            </mesh>
+          )
+        }
+        {
+          cell.buildings[1] && (
+            <mesh position={[0, 0.4, 0.4]} castShadow>
+              <boxGeometry args={[0.2, 0.35, 0.2]} />
+              <meshStandardMaterial color={color} />
+            </mesh>
+          )
+        }
+        {
+          cell.buildings[2] && (
+            <mesh position={[-0.3, 0.4, 0.4]} castShadow>
+              <boxGeometry args={[0.2, 0.5, 0.2]} />
+              <meshStandardMaterial color={color} />
+            </mesh>
+          )
+        }
+      </>
+    );
+  }, [cell, cellInfo])
+
   return (
     <>
       <mesh
         position={coord}
         rotation={rotation}
         receiveShadow
-        onPointerEnter={() => setHoverCells([position])}
-        onPointerLeave={() => setHoverCells(hoverCells.filter(x => x !== position))}
+        onPointerEnter={() => setHoverCell(position)}
+        onPointerLeave={() => setHoverCell(x => x === position ? null : x)}
       >
         <boxGeometry args={scale} />
         <meshStandardMaterial color={cellInfo.color} />
+        {buildings}
         <Text
           color='black'
           position={[0, 0.16, -0.4]}
@@ -135,12 +182,18 @@ export function Cell(props: CellProps) {
   )
 }
 
-export function Player({ pid, state }: { pid: number, state: MarblePlayerState }) {
+export function Player({ pid, state, hoverCell }: {
+  pid: number,
+  state: MarblePlayerState,
+  hoverCell: number | null,
+}) {
   const { position } = state;
 
+  const offset = hoverCell === position ? 0.1 : 0;
+
   const [x, y, z] = getCoord(Math.floor(position / 8), position % 8);
-  const coneCoord = [x, 0.5, z] as Vector3;
-  const sphereCoord = [x, 0.7, z] as Vector3;
+  const coneCoord = [x, 0.5 + offset, z] as Vector3;
+  const sphereCoord = [x, 0.7 + offset, z] as Vector3;
 
   const color = playerColors[pid];
 

@@ -49,7 +49,7 @@ export default function MarbleGamePage(props: NextProps) {
         <OrthographicCamera />
         <directionalLight position={[-10, 15, -5]} castShadow />
         <ambientLight intensity={0.5} />
-        <World state={MarbleState.create(4)} />
+        <World state={MarbleState.createMock()} />
       </Canvas>
     </div>
   )

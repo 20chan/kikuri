@@ -79,4 +79,22 @@ export namespace MarbleState {
       fund: 0,
     };
   }
+
+  export function createMock(): MarbleState {
+    const state = create(4);
+    state.cells[1].owner = 0;
+    state.cells[1].buildings = [true, true, true, true, false];
+    state.cells[3].owner = 0;
+    state.cells[3].buildings = [true, false, false, false, false];
+    state.cells[9].owner = 1;
+    state.cells[9].buildings = [true, true, false, false, false];
+    state.cells[17].owner = 2;
+    state.cells[17].buildings = [true, true, true, true, false];
+    state.cells[25].owner = 3;
+    state.cells[25].buildings = [true];
+    state.cells[31].owner = 3;
+    state.cells[31].buildings = [true];
+
+    return state;
+  }
 }
