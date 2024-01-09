@@ -1,5 +1,5 @@
 import { Text } from '@react-three/drei';
-import { MarbleCell, board } from '@/lib/games/marble/rule';
+import { MarbleCell, board } from '@/lib/games/marble/marbleRule';
 import { useMemo, useState } from 'react';
 
 export function World() {

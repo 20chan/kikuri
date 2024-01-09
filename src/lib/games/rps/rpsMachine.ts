@@ -1,11 +1,10 @@
 import { TransitResult, Machine } from '../machine';
 import { RPSAction } from './rpsAction';
-import { RPSEvent } from './rpsEvent';
 import { RPSHand } from './rpsHand';
 import { RPSState } from './rpsState';
 
-export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
-  public transit(curr: RPSState, pid: number, action: RPSAction): TransitResult<RPSState, RPSEvent> {
+export class RPSMachine implements Machine<RPSState, RPSAction> {
+  public transit(curr: RPSState, pid: number, action: RPSAction): TransitResult<RPSState> {
     const { phase } = curr;
 
     if (phase === 'wait') {
@@ -17,7 +16,6 @@ export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
               ...curr,
               phase: 'pick',
             },
-            events: [],
           };
         } else {
           return {
@@ -67,7 +65,6 @@ export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
             winners,
             hands,
           },
-          events: [],
         }
       }
 
@@ -77,7 +74,6 @@ export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
           ...curr,
           hands,
         },
-        events: [],
       };
     } else if (phase === 'result') {
       if (action.type === 'next') {
@@ -88,7 +84,6 @@ export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
               ...curr,
               phase: 'end',
             },
-            events: [],
           };
         }
 
@@ -99,7 +94,6 @@ export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
             phase: 'pick',
             hands: [null, null],
           },
-          events: [],
         };
       } else {
         return {
@@ -117,7 +111,6 @@ export class RPSMachine implements Machine<RPSState, RPSAction, RPSEvent> {
     return {
       ok: true,
       next: curr,
-      events: [],
     };
   }
 };

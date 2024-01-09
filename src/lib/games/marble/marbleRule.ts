@@ -1,25 +1,6 @@
-export type CellType = (
-  | 'start'
-  | 'city'
-  | 'airport'
-  | 'island'
-  | 'card'
-  | 'fund'
-  | 'space'
-  | 'tax'
-);
-
 type CityCell = {
   name: string;
   type: 'city';
-  color: string;
-  prices: number[];
-  fees: number[];
-}
-
-type AirportCell = {
-  name: string;
-  type: 'airport';
   color: string;
   prices: number[];
   fees: number[];
@@ -46,7 +27,6 @@ type GeneralCell = {
 
 export type MarbleCell = (
   | CityCell
-  | AirportCell
   | TaxCell
   | GeneralCell
 );
@@ -63,7 +43,7 @@ export const board: MarbleCell[][] = [
       type: 'city',
       color: '#90EE90',
       prices: [5, 25, 15, 5],
-      fees: [2, 25, 9, 1, 3]
+      fees: [1, 25, 9, 1, 3]
     },
     {
       name: '황금열쇠',
@@ -75,7 +55,7 @@ export const board: MarbleCell[][] = [
       type: 'city',
       color: '#90EE90',
       prices: [8, 25, 15, 5],
-      fees: [4, 45, 18, 2, 6],
+      fees: [1, 45, 18, 2, 6],
     },
     {
       name: '황금열쇠',
@@ -94,14 +74,14 @@ export const board: MarbleCell[][] = [
       type: 'city',
       color: '#5AAA64',
       prices: [10, 25, 15, 5],
-      fees: [6, 44, 27, 3, 9],
+      fees: [1, 44, 27, 3, 9],
     },
     {
       name: '이스탄불',
       type: 'city',
       color: '#5AAA64',
       prices: [12, 25, 15, 5],
-      fees: [8, 60, 30, 4, 10],
+      fees: [1, 60, 30, 4, 10],
     },
   ],
   [
@@ -400,3 +380,4 @@ export const cards = [
 ] as const;
 
 export const startMoney = 300;
+export const salary = 20;

@@ -1,19 +1,18 @@
-export interface Machine<TState, TAction, TEvent> {
-  transit(curr: TState, pid: number, action: TAction): TransitResult<TState, TEvent>;
+export interface Machine<TState, TAction> {
+  transit(curr: TState, pid: number, action: TAction): TransitResult<TState>;
 };
 
-export type TransitSuccess<TState, TEvent> = {
+export type TransitSuccess<TState> = {
   ok: true,
   next: TState,
-  events: TEvent[],
 };
 
-export type TransitError<TState, TEvent> = {
+export type TransitError<TState> = {
   ok: false,
   error: string,
 };
 
-export type TransitResult<TState, TEvent> = (
-  | TransitSuccess<TState, TEvent>
-  | TransitError<TState, TEvent>
+export type TransitResult<TState> = (
+  | TransitSuccess<TState>
+  | TransitError<TState>
 );
