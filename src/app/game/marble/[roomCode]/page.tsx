@@ -58,7 +58,7 @@ function OrthographicCamera() {
   const { camera } = useThree();
 
   useEffect(() => {
-    camera.zoom = 60;
+    camera.zoom = 85;
     camera.position.set(-10, 12, -10);
     camera.lookAt(0, 0, 0);
   }, [camera]);

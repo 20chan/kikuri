@@ -1,12 +1,12 @@
 import { Text } from '@react-three/drei';
 import { MarbleCell, board } from '@/lib/games/marble/rule';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 export function World() {
   return (
     <>
       <mesh position={[0, -0.2, 0]}>
-        <boxGeometry args={[12, 0.1, 12]} />
+        <boxGeometry args={[9.4, 0.1, 9.4]} />
         <meshStandardMaterial color="white" opacity={0.5} transparent />
       </mesh>
       {
@@ -41,34 +41,37 @@ export function Cell(props: CellProps) {
     builds,
   } = props;
 
-  const cellWidth = 1.5;
+  const [hover, setHover] = useState(false);
+
+  const cellWidth = 1.2;
 
   const coord = useMemo<[number, number, number]>(() => {
-    const [x, y] = position;
+    const [axis, index] = position;
+    const y = hover ? 0.1 : 0;
 
-    const end = 4.5 + cellWidth / 2;
-    if (y === 0) {
-      if (x === 0) {
-        return [-end, 0, -end];
+    const end = 3.5 + cellWidth / 2;
+    if (index === 0) {
+      if (axis === 0) {
+        return [-end, y, -end];
       }
-      return [-end + cellWidth / 2 - 0.5 + x, 0, -end];
-    } else if (y === 1) {
-      if (x === 0) {
-        return [end, 0, -end];
+      return [-end + cellWidth / 2 - 0.5 + axis, y, -end];
+    } else if (index === 1) {
+      if (axis === 0) {
+        return [end, y, -end];
       }
-      return [end, 0, -end + cellWidth / 2 - 0.5 + x];
-    } else if (y === 2) {
-      if (x === 0) {
-        return [end, 0, end];
+      return [end, y, -end + cellWidth / 2 - 0.5 + axis];
+    } else if (index === 2) {
+      if (axis === 0) {
+        return [end, y, end];
       }
-      return [end - cellWidth / 2 + 0.5 - x, 0, end];
+      return [end - cellWidth / 2 + 0.5 - axis, y, end];
     } else {
-      if (x === 0) {
-        return [-end, 0, end];
+      if (axis === 0) {
+        return [-end, y, end];
       }
-      return [-end, 0, end - cellWidth / 2 + 0.5 - x];
+      return [-end, y, end - cellWidth / 2 + 0.5 - axis];
     }
-  }, [position]);
+  }, [position, hover]);
 
   const rotation = useMemo<[number, number, number]>(() => {
     const [x, y] = position;
@@ -90,12 +93,12 @@ export function Cell(props: CellProps) {
 
   return (
     <>
-      <mesh position={coord} rotation={rotation}>
+      <mesh position={coord} rotation={rotation} onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
         <boxGeometry args={scale} />
         <meshStandardMaterial color={cell.color} />
         <Text
           color='black'
-          position={[0, 0.16, 0.4]}
+          position={[0, 0.16, -0.4]}
           rotation={[Math.PI / 2, Math.PI, 0]}
           scale={[0.2, 0.2, 0.2]}
           fontSize={1.1}
