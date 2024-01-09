@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { NextProps } from 'nextjs-parser';
 import { useCallback, useEffect } from 'react';
 import { World } from './world';
+import { MarbleState } from '@/lib/games/marble/marbleState';
 
 export default function MarbleGamePage(props: NextProps) {
   const { params } = props;
@@ -44,11 +45,11 @@ export default function MarbleGamePage(props: NextProps) {
     <div className='p-12 flex flex-col items-center h-screen'>
       <p className='text-5xl'>Rainbow Marble</p>
 
-      <Canvas className='w-full h-full' orthographic>
+      <Canvas className='w-full h-full' orthographic shadows>
         <OrthographicCamera />
-        <directionalLight position={[-10, 15, -5]} />
+        <directionalLight position={[-10, 15, -5]} castShadow />
         <ambientLight intensity={0.5} />
-        <World />
+        <World state={MarbleState.create(4)} />
       </Canvas>
     </div>
   )
@@ -61,6 +62,7 @@ function OrthographicCamera() {
     camera.zoom = 85;
     camera.position.set(-10, 12, -10);
     camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
   }, [camera]);
 
   return null;

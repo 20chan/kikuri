@@ -381,3 +381,10 @@ export const cards = [
 
 export const startMoney = 300;
 export const salary = 20;
+
+export const playerColors = [
+  'red',
+  'green',
+  'blue',
+  'orange',
+];
